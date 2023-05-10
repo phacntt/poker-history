@@ -28,6 +28,7 @@ jobs:
                 -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
                 -e DB_NAME=${{ secrets.DB_NAME }} \
                 -e DB_PORT=${{ secrets.DB_PORT }} \
+                -e DB_HOST=${{ secrets.DB_HOST }} \
                 -e RABBIT_MQ_HOST=${{ secrets.RABBIT_MQ_HOST }} \
                 -e RABBIT_MQ_HISTORIES_QUEUE=${{ secrets.RABBIT_MQ_HISTORIES_QUEUE }} \
                 poker-history:$GITHUB_RUN_NUMBER
