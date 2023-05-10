@@ -17,7 +17,7 @@ jobs:
             cd code/
             rm -rf poker-history
             git clone https://${{ secrets.POKER_HISTORY_TOKEN_SSH }}@github.com/phacntt/poker-history.git
-            cd history
+            cd poker-history
             DOCKER_BUILDKIT=1 docker build -t poker-history:$GITHUB_RUN_NUMBER .
             docker stop poker-history || echo "stop container - OK"
             docker rm poker-history || echo "remove container - OK"

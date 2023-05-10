@@ -1,6 +1,8 @@
-FROM node:alpine as build
+FROM node:alpine As development
+
 WORKDIR /usr/src/app/poker-history
-COPY ./package*.json ./
+
+COPY package*.json ./
 RUN yarn
 COPY . .
 RUN yarn build
@@ -12,12 +14,12 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app/poker-history
 
-COPY ./package*.json ./
+COPY package*.json ./
 
 RUN yarn --only=production
 
 COPY . .
 
-COPY --from=build /usr/src/app/poker-history/dist ./dist
+COPY --from=development /usr/src/app/poker-history/dist ./dist
 
-CMD node dist/index.js
+CMD ["node", "dist/src/main"]
