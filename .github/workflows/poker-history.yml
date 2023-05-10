@@ -1,0 +1,33 @@
+name: deploy poker-history by ZUNO
+on: push
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: supnobita/ssh-action@master
+        with:
+          host: 52.77.228.179
+          username: ubuntu
+          key: ${{ secrets.POKER_HISTORY_SECRET }}
+          port: 22
+          envs: GITHUB_RUN_NUMBER
+          script: |
+            cd code/
+            rm -rf poker-history
+            git clone https://${{ secrets.POKER_HISTORY_TOKEN_SSH }}@github.com/phacntt/poker-history.git
+            cd history
+            DOCKER_BUILDKIT=1 docker build -t poker-history:$GITHUB_RUN_NUMBER .
+            docker stop poker-history || echo "stop container - OK"
+            docker rm poker-history || echo "remove container - OK"
+            docker run --restart unless-stopped -d --name poker-history -p 8888:8888 \
+                -e NODE_ENV=${{ secrets.NODE_ENV }} \
+                -e HOST=172.31.33.255 \
+                -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+                -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+                -e DB_NAME=${{ secrets.DB_NAME }} \
+                -e DB_PORT=${{ secrets.DB_PORT }} \
+                -e RABBIT_MQ_HOST=${{ secrets.RABBIT_MQ_HOST }} \
+                -e RABBIT_MQ_HISTORIES_QUEUE=${{ secrets.RABBIT_MQ_HISTORIES_QUEUE }} \
+                poker-history:$GITHUB_RUN_NUMBER
