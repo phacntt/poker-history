@@ -1,10 +1,20 @@
 import { Table, Column, Model } from 'sequelize-typescript';
+import { EAction, ERoomLvl } from './constant/types';
 
 @Table
 export class History extends Model {
   @Column
-  name: string;
+  roomId: string;
+
+  @Column({ type: ERoomLvl })
+  roomLvl: string;
 
   @Column
-  age: number;
+  userId: string;
+
+  @Column({ type: EAction })
+  action: string;
+
+  @Column
+  chips: number;
 }

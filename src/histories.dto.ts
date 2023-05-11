@@ -1,7 +1,13 @@
 import { Length } from 'sequelize-typescript';
 
 export class CreateHistoryDto {
-  name: string;
+  roomId: string;
 
-  age: number;
+  roomLvl: string;
+
+  userId: string;
+
+  action: string;
+
+  chips: number;
 }
