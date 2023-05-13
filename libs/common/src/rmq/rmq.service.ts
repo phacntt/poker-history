@@ -6,7 +6,6 @@ import { RmqOptions, Transport, RmqContext } from '@nestjs/microservices';
 export class RmqService {
   constructor(private readonly configService: ConfigService) {}
   getOptions(queue: string, noAck = false): RmqOptions {
-    console.log(process.env.RABBIT_MQ_HOST);
     return {
       transport: Transport.RMQ,
       options: {

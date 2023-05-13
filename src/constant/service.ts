@@ -1,0 +1,2 @@
+export const HISTORIES_SERVICE_NAME = 'HISTORIES';
+export const APP_SERVICE_NAME = 'APP';

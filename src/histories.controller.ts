@@ -1,7 +1,8 @@
-import { Controller } from '@nestjs/common';
-import { Ctx, EventPattern, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
+import { Controller, Inject } from '@nestjs/common';
+import { ClientProxy, Ctx, EventPattern, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
 import { HistoriesService } from './histories.service';
-import { RmqService } from 'lib/common/src/rmq/rmq.service';
+import { CreateHistoryRequest } from './dto/create-history-request.dto';
+import { RmqService } from '@app/common';
 
 @Controller('history')
 export class HistoriesController {
@@ -10,12 +11,12 @@ export class HistoriesController {
   @MessagePattern('get-histories')
   async handleFindHistories(@Payload() data: any, @Ctx() context: RmqContext) {
     console.log('DATA NE: ', data);
-    this.historiesSerivce.findHistories(data);
+    await this.historiesSerivce.findHistories(data);
     this.rmqService.ack(context);
   }
 
   @EventPattern('create-history')
-  async handleHistoryCreated(@Payload() data: any, @Ctx() context: RmqContext) {
+  async handleHistoryCreated(@Payload() data: CreateHistoryRequest, @Ctx() context: RmqContext) {
     console.log('DATA: ', data);
     this.historiesSerivce.createHistory(data);
     this.rmqService.ack(context);

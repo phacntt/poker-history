@@ -3,11 +3,10 @@ import { HistoriesController } from './histories.controller';
 import { HistoriesService } from './histories.service';
 import { historysProviders } from './histories.provider';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from 'lib/common/src/database/database.module';
-import { RmqModule } from 'lib/common/src/rmq/rmq.module';
+import { DatabaseModule, RmqModule } from '@app/common';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, RmqModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, RmqModule.register({ name: 'APP' })],
   controllers: [HistoriesController],
   providers: [HistoriesService, ...historysProviders],
 })

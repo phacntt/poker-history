@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { HistoriesModule } from './histories.module';
-import { RmqService } from 'lib/common/src/rmq/rmq.service';
+import { RmqService } from '@app/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(HistoriesModule);
