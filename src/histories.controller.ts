@@ -15,7 +15,7 @@ export class HistoriesController {
     this.rmqService.ack(context);
   }
 
-  @EventPattern('history')
+  @EventPattern({ cmd: 'history' })
   async handleHistoryCreated(@Payload() data: CreateHistoryRequest, @Ctx() context: RmqContext) {
     console.log('DATA: ', data);
     this.historiesSerivce.createHistory(data);
