@@ -15,5 +15,5 @@ export class CreateHistoryRequest {
   roomLvl: string;
 
   @IsNumber()
-  chips: string;
+  chips: number;
 }

@@ -29,6 +29,7 @@ export class HistoriesService {
 
   async createHistory(data: CreateHistoryRequest): Promise<History> {
     console.log('VO CREATE NHA:>>>>>>>>>');
-    return await this.HistoriesRepository.create<History>({ data });
+    console.log(data);
+    return await this.HistoriesRepository.create<History>({ ...data });
   }
 }
